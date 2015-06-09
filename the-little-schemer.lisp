@@ -1,6 +1,12 @@
 (defun atom? (x)
   (not (listp x)))
 
+(defun add1 (n)
+  (+ n 1))
+
+(defun sub1 (n)
+  (- n 1))
+
 ;; implement lat: are all elements or S-expression
 ;; (nice explanation on accepted answer http://stackoverflow.com/questions/10771107/lisp-list-vs-s-expression)
 ;; of a list atoms ?
@@ -128,3 +134,65 @@
 		 ((eq (car lat) old)
 		  (cons new (multisubst new old (cdr lat))))
 		 (t (cons (car lat) (multisubst new old (cdr lat))))))))
+
+;; write the function + with zerop add1 and sub1
+(defun o+ (a b)
+  (cond
+	((zerop b) a) ; first rule bitch
+	(t (add1 (o+ a (sub1 b))))))
+
+;; write the - function with sub1
+(defun o- (a b)
+  (cond
+	((zerop b) a)
+	(t (sub1 (o- a (sub1 b))))))
+
+;; so what we did here is that we reduced the second argument to zero
+;; we then substract 1 from the result as many time as it needed to go down to 0
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; the first rule updated is:                                   ;;
+;; When recurring on a list of atoms, lat, ask two questions    ;;
+;; about it: ( null ? lat) and else.                            ;;
+;; When recurring on a number, n , ask two questions about      ;;
+;; it: (zero ? n) and else.                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun addtup (tup)
+  (cond
+	((null tup) 0)
+	(t (+ (car tup) (addtup (cdr tup)))))) ; we use + as cons -> rule 2 bitch
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; the fourth rule updated is:                                  ;;
+;; Always change at least one argument while recurring. It      ;;
+;; must be changed to be closer to termination. The changing    ;;
+;; argument must be tested in the termination condition:        ;;
+;; when using cdr, test termination with null? and              ;;
+;; when using sub1 , test termination with zero ?.              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; write the * function
+(defun o* (a b)
+  (cond
+	((zerop b) a)
+	(t (+ a (* a (sub1 b))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; the fifth rule is:                                               ;;
+;; When building a value with + , always use 0 for the value of the ;;
+;; terminating line, for adding 0 does not change the value of an   ;;
+;; addition.                                                        ;;
+;; When building a value with x , always use 1 for the value of the ;;
+;; terminating line, for multiplying by 1 does not change the value ;;
+;; of a multiplication.                                             ;;
+;; When building a value with                                       ;;
+;; of the terminating line.                                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; write the function tup+ which add each element of tow tuples betwwen them
+(defun tup+ (t1 t2)
+  (cond
+	((null t1) t2)
+	((null t2) t1)
+	(t (cons (+ (car t1) (car t2)) (tup+ (cdr t1) (cdr t2))))))
