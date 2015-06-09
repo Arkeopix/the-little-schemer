@@ -56,7 +56,7 @@
 	;; we (car (car list)) because we need the first value of the first list
 	;; we cons the resulting value onto the recursion of first (cdr list)
 	(t (cons (car (car list)) (firsts (cdr list)))))) ; second and third rule
-;;		     |   typical    | |     natural     |
+;;           |   typical    | |     natural     |
 ;;           |   element    | |    recursion    |
 
 ;; insertR/L takes 3 arguments (new old lat) and creates a new list with new inserted
