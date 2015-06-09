@@ -196,3 +196,56 @@
 	((null t1) t2)
 	((null t2) t1)
 	(t (cons (+ (car t1) (car t2)) (tup+ (cdr t1) (cdr t2))))))
+
+;; write the function >
+(defun my> (a b)
+  (cond
+	((zerop a) nil)
+	((zerop b) t)
+	(t (my> (sub1 a) (sub1 b)))))
+
+;; write the function <
+(defun my< (a b)
+  (cond
+	((zerop b) nil)
+	((zerop a) t)
+	(t (my< (sub1 a) (sub1 b)))))
+
+;; write the function = using < and >
+(defun my= (a b)
+  (cond
+	((my> a b) nil)
+	((my< a b) nil)
+	(t t)))
+
+
+;; write the expt function
+(defun myexpt (a b)
+  (cond
+	((zerop b) 1)
+	(t (* a (myexpt a (sub1 b))))))
+
+;; write the / function
+(defun mydiv (a b)
+  (cond
+	((my< a b) 0)
+	(t (add1 (mydiv (- a b) b)))))
+
+;; so in the end, here is the decomposition
+;; (15 4) = 1 + (/ 11 4)
+;;        = 1 + (1 + (/ 7 4))
+;;        = 1 + (1 + (1 + (/ 3 4)))
+;;        = 1 + (1 + (1 + 0))
+
+
+;; write the function len
+(defun mylen (list)
+  (cond
+	((null list) 0)
+	(t (add1 (mylen (cdr list))))))
+
+;; write the function pick
+(defun mypick (n list)
+  (cond
+	((zerop (sub1 n)) (car list))
+	(t (mypick (sub1 n) (cdr list)))))
