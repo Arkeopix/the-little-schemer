@@ -19,7 +19,7 @@
 		   (member? atom (cdr lat)))))) ; recurse
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; The first rule when recursing is:								;;
+;; The first rule when recursing is:                                ;;
 ;; Always ask null as the first question in expressing any function ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -31,8 +31,8 @@
 		 (t (rember atom (cdr lat)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; The second rule is:												;;
-;; Use cons to build list											;;
+;; The second rule is:                                              ;;
+;; Use cons to build list                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; rember and rember-cons remove the member atom from the list lat
@@ -44,7 +44,7 @@
 			 (rember-cons atom (cdr lat)))))) ; the succesive recursive calls to rember-cons
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; the third rull is:    											;;
+;; the third rull is:                                               ;;
 ;; When building a list, describe the first typical element, and    ;;
 ;; then cons it onto the natural recursion                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -57,7 +57,7 @@
 	;; we cons the resulting value onto the recursion of first (cdr list)
 	(t (cons (car (car list)) (firsts (cdr list)))))) ; second and third rule
 ;;		     |   typical    | |     natural     |
-;; 			 |   element    | |    recursion    |
+;;           |   element    | |    recursion    |
 
 ;; insertR/L takes 3 arguments (new old lat) and creates a new list with new inserted
 ;; to the right/left of the first occurence of old
@@ -94,3 +94,37 @@
 	 (multirember atom (cdr lat))) ; recurse with the cdr of the list so that we are sure to remove all occurence
 	(t (cons (car lat) (multirember atom (cdr lat)))))) ; else we just cons the car of lat (typical case) onto the natural recursion
 
+
+;; multiinsertR
+(defun multiinsertR (new old lat)
+  (cond
+	((null lat) '())
+	(t (cond
+		 ((eq (car lat) old)
+		  (cons old (cons new (multiinsertR new old (cdr lat)))))
+		 (t (cons (car lat) (multiinsertR new old (cdr lat))))))))
+
+(defun multiinsertL (new old lat)
+  (cond
+	((null lat) '())
+	(t (cond
+		 ((eq (car lat) old)
+		  (cons new (cons old (multiinsertL new old (cdr lat)))))
+		 (t (cons (car lat) (multiinsertL new old (cdr lat))))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The fourth rule is:                                             ;;
+;; Always change at least one argument while recurring. It         ;;
+;; must be changed to be closer to termination. The changing       ;;
+;; argument must be tested in the termination condition:           ;;
+;; when using cdr, test termination with null?.                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; multisubst changes all occurences of atom old with atom new in list lat
+(defun multisubst (new old lat)
+  (cond
+	((null lat) '())
+	(t (cond
+		 ((eq (car lat) old)
+		  (cons new (multisubst new old (cdr lat))))
+		 (t (cons (car lat) (multisubst new old (cdr lat))))))))
