@@ -342,3 +342,53 @@
 ;; question about it: ( null? l ) , ( atom ? ( car l) ) , and else.      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; write the occur* function
+(defun occur* (atom list)
+  (cond
+	((null list) 0)
+	((atom? (car list))
+	 (cond
+	   ((eq (car list) atom)
+		(add1 (occur* atom (cdr list))))
+	   (t (occur* atom (cdr list)))))
+	(t (+ (occur* atom (car list)) (occur* atom (cdr list))))))
+
+;; write the subst* function
+(defun subst* (new old list)
+  (cond
+	((null list) '())
+	((atom? (car list))
+	 (cond
+	   ((eq (car list) old)
+		(cons new (subst* new old (cdr list))))
+	   (t (cons (car list) (subst* new old (cdr list))))))
+	(t (cons (subst* new old (car list)) (subst* new old (cdr list))))))
+
+;; write the insertL* function
+(defun insertL* (new old list)
+  (cond
+	((null list) '())
+	((atom? (car list))
+	 (cond
+	   ((eq (car list) old)
+		(cons new (cons old (insertL* new old (cdr list)))))
+	   (t (cons (car list) (insertL* new old (cdr list))))))
+	(t (cons (insertL* new old (car list)) (insertL* new old (cdr list))))))
+
+;; write the member* function
+(defun member* (atom list)
+  (cond
+	((null list) nil)
+	((atom? (car list))
+	 (cond
+	   ((eq (car list) atom)
+		t)
+	   (t (member* atom (cdr list)))))
+	(t (member* atom (car list)))))
+;;sans les mains wesh
+
+;; write the leftmost function
+(defun leftmost (list)
+  (cond
+	((atom? (car list)) (car list))
+	(t (leftmost (car list)))))
