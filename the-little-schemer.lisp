@@ -232,10 +232,10 @@
 	(t (add1 (mydiv (- a b) b)))))
 
 ;; so in the end, here is the decomposition
-;; (15 4) = 1 + (/ 11 4)
-;;        = 1 + (1 + (/ 7 4))
-;;        = 1 + (1 + (1 + (/ 3 4)))
-;;        = 1 + (1 + (1 + 0))
+;; (/ 15 4) = 1 + (/ 11 4)
+;;          = 1 + (1 + (/ 7 4))
+;;          = 1 + (1 + (1 + (/ 3 4)))
+;;          = 1 + (1 + (1 + 0))
 
 
 ;; write the function len
@@ -249,3 +249,96 @@
   (cond
 	((zerop (sub1 n)) (car list))
 	(t (mypick (sub1 n) (cdr list)))))
+
+;; write the rempick function
+(defun rempick (n list)
+  (cond
+	((zerop n) (cdr list))
+	(t (cons (car list) (rempick (sub1 n) (cdr list))))))
+
+;; write a function no-nums
+(defun no-nums (lat)
+  (cond
+	((null lat) '())
+	(t (cond
+		 ((numberp (car lat))
+		  (no-nums (car lat)))
+		 (t (cons (car lat) (no-nums (cdr lat))))))))
+
+;; write the all-nums function
+(defun all-nums (lat)
+  (cond
+	((null lat) '())
+	(t (cond
+		 ((numberp (car lat))
+		  (cons (car lat) (all-nums (cdr lat))))
+		 (t (all-nums (cdr lat)))))))
+
+;; write the function epan
+(defun epan (a1 a2)
+  (cond
+	((and (numberp a1) (numberp a2))
+	 (= a1 a2))
+	((or (numberp a1) (numberp a2))
+	 nil)
+	(t (eq a1 a2))))
+
+;; write the occur function
+(defun occur (atom lat)
+  (cond
+	((null lat) 0)
+	(t (cond
+		 ((eq (car lat) atom)
+		  (add1 (occur atom (cdr lat))))
+		 (t (occur atom (cdr lat)))))))
+
+;; write the one function
+(defun onep (n)
+  (cond
+	((numberp n)
+	 (= 1 n))
+	(t nil)))
+
+;; or
+(defun one (n) (= 1 n))
+;; but this sucks because it will crash if n is not a number
+
+;; rewrite rempick with onep
+(defun rempick2 (n list)
+  (cond
+	((onep n) (cdr list))
+	(t (cons (car list) (rempick2 (sub1 n) (cdr list))))))
+
+;; write the rember* function
+(defun rember* (atom list)
+  (cond
+	((null list) '())
+	((atom? (car list)) ; if it's an atom do your stuff
+	 (cond
+	   ((eq atom (car list))
+		(rember* atom (cdr list)))
+	   (t (cons (car list) (rember* atom (cdr list))))))
+	(t (cons (rember* atom (car list)) ; else recur on the the newfound list
+			 (rember* atom (cdr list))))))
+
+;; write the insertR function
+(defun insertR* (new old list)
+  (cond
+	((null list)'())
+	((atom? (car list))
+	 (cond
+	   ((eq (car list) old)
+		(cons old (cons new (insertR* new old (cdr list)))))
+	   (t (cons (car list) (insertR* new old (cdr list))))))
+	(t (cons (insertR* new old (car list)) (insertR* new old (cdr list))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The first rule final is: 
+;; When recurring on a list of atoms, lat , ask two questions            ;;
+;; about it: ( null? lat) and else.                                      ;;
+;; When recurring on a number, n , ask two questions about               ;;
+;; it: (zero ? n) and else.                                              ;;
+;; When recurring on a list of S-expressions, l, ask three               ;;
+;; question about it: ( null? l ) , ( atom ? ( car l) ) , and else.      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
