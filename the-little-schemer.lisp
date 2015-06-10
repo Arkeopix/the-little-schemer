@@ -392,3 +392,49 @@
   (cond
 	((atom? (car list)) (car list))
 	(t (leftmost (car list)))))
+
+;; write the eqlist function
+(defun eqlist (l1 l2)
+  (cond
+	((and (null l1) (null l2)) t)
+	((and (null l1) (atom? (car l2))) nil)
+	((null l1) nil)
+	((and (atom? (car l1)) (atom? (car l2)))
+	 (and (epan (car l1) (car l2))
+		  (eqlist (cdr l1) (cdr l2))))
+	((atom? (car l1)) nil)
+	((null l2) nil)
+	((atom? (car l2)) nil)
+	(t (and (eqlist (car l1) (car l2))
+			(eqlist (cdr l1) (cdr l2))))))
+
+;; rewcrite the eqlist function
+(defun eqlist2 (l1 l2)
+  (cond
+	((and (null l1) (null l2)) t)
+	((or (null l1) (null l2)) nil)
+	((and (atom? (car l1))
+		  (atom? (car l2)))
+	 (and (epan (car l1) (car l2))
+		  (eqlist2 (cdr l1) (cdr l2))))
+	((or (atom? (car l1))
+		 (atom? (car l2)))
+	 nil)
+	(t (and (eqlist2 (car l1) (car l2))
+			(eqlist2 (cdr l1) (cdr l2))))))
+
+;; write the equal function
+(defun myequal (se1 se2)
+  (cond
+	((and (atom? se1) (atom? se2))
+	 (epan se1 se2))
+	((or (atom? se1) (atom? se2)) nil)
+	(t (eqlist2 se1 se2))))
+
+;; re rewcrite eqlist using equal
+(defun eqlist3 (l1 l2)
+  (cond
+	((and (null l1) (null l2)) t)
+	((or (null l1) (null l2)) nil)
+	(t (and (myequal (car l1) (car l2))
+			(eqlist3 (cdr l1) (cdr l2))))))

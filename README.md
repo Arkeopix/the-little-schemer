@@ -48,7 +48,7 @@ you may have noticed the precence of a file
 >>When recurring on a list of S-expressions, l, ask three
 >>question about it: ( null? l ) , ( atom ? ( car l) ) , and else.
 
-####The Fourt Commandment
+####The Fourth Commandment
 >>Always change at least one argument while recurring.
 >>When recurring on a list of atoms, lat, use ( cdr lat ) . When
 >>recurring on a number, n , use (sub1 n) . And when recurring on a list of S-expressions, l , use ( car l) and ( cdr l) if
@@ -56,3 +56,6 @@ you may have noticed the precence of a file
 >>It must be changed to be closer to termination. The changing argument must be tested in the termination condition:
 >>when using cdr , test termination with null ? and
 >>when using sub1 , test termination with zero ?.
+
+####The Sixth Commandment
+>>Simplify only after the function is correct.
