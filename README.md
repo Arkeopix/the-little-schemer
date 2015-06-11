@@ -67,3 +67,8 @@ you may have noticed the precence of a file
 
 ####The Heighth Commandment
 >>Use help functions to abstract from representations.
+
+### Euler
+Project euler is an awesome collection of math problems, which you must resolve
+using whatever the fuck you want, for me it's lisp as i'm trying to learn it.
+I will probably never finish all of the challenges, but at least enough to get Lisp, i hope
