@@ -496,3 +496,44 @@
 ;; The Eighth Commandment                                       ;;
 ;; Use help functions to abstract from representations.         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; now we change representation. instead of of arabic symbols let's use
+;; emtptylist as numbers. ie () is 0, (()) is 1, (()()) is 2 and so on.
+
+;; write a function to test for 0
+(defun pero (n)
+  (null n))
+
+;; write a function like add1
+(defun padd1 (n)
+  (cons '() n))
+
+;; sub1
+(defun psub1 (n)
+  (cdr n))
+
+;; rewrite + using this representation
+(defun p+ (a b)
+  (cond
+	((pero b) a)
+	(t (padd1 (p+ a (psub1 b))))))
+
+;; Write the set function
+(defun myset (lat)
+  (cond
+	((null lat) t)
+	((member? (car lat) (cdr lat)) nil)
+	(t (myset (cdr lat)))))
+
+;; write the makeset function
+(defun makeset (lat)
+  (cond
+	((null lat) '())
+	((member? (car lat) (cdr lat))
+	 (makeset (cdr lat)))
+	(t (cons (car lat) (makeset (cdr lat))))))
+
+(defun makeset2 (lat)
+  (cond
+	((null lat) '())
+	(t (cons (car lat) (multirember (car lat) (cdr lat))))))
