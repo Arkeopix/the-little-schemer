@@ -438,3 +438,61 @@
 	((or (null l1) (null l2)) nil)
 	(t (and (myequal (car l1) (car l2))
 			(eqlist3 (cdr l1) (cdr l2))))))
+
+;; rewrite rember to take a list insetad of a lat and atom by s-expression
+(defun rember-lat (s list)
+  (cond
+	((null list) '())
+	((myequal (car list) s) (cdr list))
+	(t (cons (car list) (rember-lat s (cdr list))))))
+
+;; write the numbered function
+(defun numbered (aexp)
+  (cond
+	((atom? aexp) (numberp aexp))
+	(t (and (numbered (car aexp))
+			(numbered (car (cdr (cdr aexp))))))))
+
+;; write the value function
+(defun value (exp)
+  (cond
+	((atom? exp) exp)
+	((eq  (car (cdr exp)) '+) ;(3 + 4) -> +
+	 (+ (value (car exp)) (value (car (cdr (cdr exp)))))) ; (3 + 4) -> (+ 3 4)
+	((eq (car (cdr exp)) '*)
+	 (* (value (car exp)) (value (car (cdr (cdr exp))))))
+	(t (myexpt (value (car exp)) (value (car (cdr (cdr exp))))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The Seventh Commandment                                           ;;
+;; Recur on the subparts that are of the same nature:                ;;
+;; • On the sublists of a list.                                      ;;
+;; • On the subexpressions of an arithmetic expression.              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; write a function to extract the first sub expression
+(defun firstsubexpr (exp)
+  (car (cdr exp)))
+
+;; write a function to extract the second sub expresion
+(defun secondsubexpr (exp)
+  (car (cdr (cdr exp))))
+
+;; replace the car with an operator function
+(defun operator (exp)
+  (car exp))
+
+;; rewrite value with those function
+(defun value2 (exp)
+  (cond
+	((atom? exp) exp)
+	((eq (operator exp) '+)
+	 (+ (value (firstsubexpr exp)) (value (secondsubexpr exp))))
+	((eq (car (cdr exp)) '*)
+	 (* (value (firstsubexpr exp)) (value (secondsubexpr exp))))
+	(t (myexpt (firstsubexpr exp) (value (secondsubexpr exp))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The Eighth Commandment                                       ;;
+;; Use help functions to abstract from representations.         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

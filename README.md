@@ -16,8 +16,8 @@ tutorial, or idealy one of those nice books with cool names like "learn you some
 One of the major problem is: for the past three years i've been trying to learn Lisp, and it
 always has been a faillure! Maybe i'm just plain stupid or maybe good ressources concerning lisp are hard to comme by ? Who knows ?
 
-Anyway, this time i decided to document my learning process. Dunno why, I just feel like it. May it serve some
-poor souls wandering the Lisp land.
+Anyway, this time i decided to document my learning process. maybe writing about it will help me focus/understand better.
+May it serve some other poor souls wandering before the gates of Lisp land.
 
 ## Usefull ressources
 for the past tree years (i'm writing this in 2015) I did found some stuff worth looking at. I will
@@ -59,3 +59,11 @@ you may have noticed the precence of a file
 
 ####The Sixth Commandment
 >>Simplify only after the function is correct.
+
+####The Seventh Commandment
+>>Recur on the subparts that are of the same nature:
+>>• On the sublists of a list.
+>>• On the subexpressions of an arithmetic expression.
+
+####The Heighth Commandment
+>>Use help functions to abstract from representations.
