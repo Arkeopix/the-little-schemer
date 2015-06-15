@@ -49,7 +49,10 @@
 
 ;; no major problem here
 (defun sum-even-fib (a)
-  (let ((x (fib a)))
+  ;; the let statement got me quite confused because x was not defined
+  ;; but then i remebered that lisp standed for LIST Processing
+  ;; so i moved the body of the function in the let statement and all was fine
+  (let ((x (fib a))) 
 	(cond
 	  ((< x 4000000)
 	   (cond
@@ -76,3 +79,31 @@
 ;; went smouthly
 (defun problem3 (a)
   (get-largest-prime-factor a 2))
+
+
+
+
+;; A palindromic number reads the same both ways. The largest palindrome made
+;; from the product of two 2-digit numbers is 9009 = 91 × 99.
+;; Find the largest palindrome made from the product of two 3-digit numbers.
+
+;; helper function to check for palindrom
+(defun palindrom (s)
+  (let ((a (write-to-string s :base 10)))
+	(cond
+	  ((string-equal (reverse a) a) t)
+	  (t nil))))
+
+(defun get-largest-palindrome-of-2-3-digit-number (d1 d2 max)
+  (cond
+	((= d1 99) max)
+	((= d2 99)
+	 (get-largest-palindrome-of-2-3-digit-number (- d1 1) 999 max))
+	(t (let ((p (* d1 d2)))
+		 (cond
+		   ((and (> p max) (palindrom p))
+			(get-largest-palindrome-of-2-3-digit-number d1 d2 p))
+		   (t (get-largest-palindrome-of-2-3-digit-number d1 (- d2 1) max)))))))
+  
+(defun problem4 ()
+  (get-largest-palindrome-of-2-3-digit-number 999 999 0))
