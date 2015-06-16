@@ -537,3 +537,11 @@
   (cond
 	((null lat) '())
 	(t (cons (car lat) (multirember (car lat) (cdr lat))))))
+
+;; write the subset function
+(defun subset? (set1 set2)
+  (cond
+	((null set1) t)
+	((member? (car set1) set2)
+	 (subset? (cdr set1) set2))
+	(t nil)))

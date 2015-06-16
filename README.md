@@ -69,6 +69,8 @@ you may have noticed the precence of a file
 >>Use help functions to abstract from representations.
 
 ### Euler
+in case anyone is reading this: if you're going though euler project, do not check my solution to the problem
+you are solving, you would miss the point of this great project
 Project [Euler](https://projecteuler.net/about) is an awesome collection of math problems, which you must resolve
 using whatever the fuck you want, for me it's lisp as i'm trying to learn it.
 I will probably never finish all of the challenges, but at least enough to get Lisp, i hope
