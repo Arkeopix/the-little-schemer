@@ -74,3 +74,50 @@ you are solving, you would miss the point of this great project
 Project [Euler](https://projecteuler.net/about) is an awesome collection of math problems, which you must resolve
 using whatever the fuck you want, for me it's lisp as i'm trying to learn it.
 I will probably never finish all of the challenges, but at least enough to get Lisp, i hope
+
+### Practical common lisp
+quick notes about things i deem important:
+
+#### S-Expressions
+They're composed of atoms and list:
+- lists are delimited by parentheses
+- atoms are everything else
+
+Atoms may be:
+- Numbers -> 244, 3/7, -1, +42 are numbers
+- Strings -> "Antipop", "Frizzle\"fry" are strings
+- Names -> format, hello-world *db* are names they are represented by objects called symbols
+
+#### Special operators
+>>          (if x (format t "yes") (format t "no"))
+>>If IF were a function, the evaluator would evaluate the argument expressions from left to right.
+>>The symbol x would be evaluated as a variable yielding some value; then (format t "yes")
+>>would be evaluated as a function call, yielding NIL after printing "yes" to standard output. Then
+>>(format t "no") would be evaluated, printing "no" and also yielding NIL. Only after all three expressions
+>>were evaluated would the resulting values be passed to IF, too late for it to control which of the two
+>>FORMAT expressions gets evaluated.
+
+this is why there are 25 special operators built in the language
+
+'if' is one of them
+'quote' or ' is another one
+
+#### Truth, Falsehood, and Equality
+everyting other than nil is true. the cannonical way of reprenting truth is t
+nil is the only object that is an atom and a list at the same time, sa we use nil to represent empty lists
+
+we test equality with:
+- = for numbers
+- char= for characters
+- string= for strings
+- and so on
+
+other than that, (there are eq, eql, equal and equalp)[http://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp/547451#547451]:
+-eq tests for object identity, which means we can use it to check whether two object are the exact same (eq 'a 'a) true, (eq 1 1) unsure
+-eql tests behaves in the same way, plus ot compares classes and value so that (eql 1 1)is true and (eql 1 1.0) is false
+-equal is the same as eql, onmly more tolerant
+-equalp is tolerant++
+
+#### Formatting Lisp Code
+comments -> ;;;; header text, ;;; paragraph, ;; "block" specific, ; line specific
+

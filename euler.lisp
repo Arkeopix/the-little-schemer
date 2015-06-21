@@ -7,6 +7,7 @@
 
 ;; helper function to generate a range, taken from SO
 (defun make-range (end &key (start 0) (step 1))
+  "generates a range of numbers from :start to end jumping step between each number"
   (loop for i from start below end by step collect i))
 
 ;; so at first i went with a copy of my errlang solution, using lists:foldl and lists:seq
