@@ -34,6 +34,11 @@ with the new-commer. I just felt realy overflowed by all this information and ga
 - [the little schemer](http://kysmykseka.net/koti/wizardry/Programming/Lisp/Scheme/The%20Little%20Schemer%204th%20Ed.pdf)
 is by far one of the best ressources i've read about Lisp. It's also a good introduction to recursion.
 i'm not done yet, but as far of chapter four, the recursion demonstrated in the book is not terminal.
+- [Project Euler](https://projecteuler.net/about)
+maths exercises. lots of them.
+- [PTHW](http://projectsthehardway.com/)
+a bunch of cool project to get you started with some real stuff, instead of computing primes and what not
+
 
 ### The little schemer
 you may have noticed the precence of a file
@@ -121,3 +126,7 @@ other than that, (there are eq, eql, equal and equalp)[http://stackoverflow.com/
 #### Formatting Lisp Code
 comments -> ;;;; header text, ;;; paragraph, ;; "block" specific, ; line specific
 
+### PTHW
+
+####Logfind
+So i learned quite a lot about lisp doing this exercise: scope, macros (which i finaly did not use)
