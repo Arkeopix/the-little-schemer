@@ -1,0 +1,10 @@
+# Created by https://www.gitignore.io
+
+### CommonLisp ###
+*.FASL
+*.fasl
+*.lisp-temp
+
+### General shits ###
+*~
+*#
