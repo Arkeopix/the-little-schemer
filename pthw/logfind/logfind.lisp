@@ -1,6 +1,6 @@
 #! /usr/local/bin/sbcl --noinform
 
-(ql:quickload :cl-ppcre)
+(ql:quickload :cl-ppcre :silent t)
 
 (defun read-file (file)
   (with-open-file (in file)
@@ -39,7 +39,8 @@
 								  (t (push nil match))))
 						   (if (apply-logic logic-behaviour match)
 							   (push file match-file)))))))
-			(format t "file matched:~{~%~5t- ~a~}" match-file))))))
+			(format t "file matched thanks to .logfind: ~{~%~5t- ~a~}" match-file))))
+	));; run all dir if .logfind does not exists
 
 (defun behaviour (argv)
   "determines the logic behaviour of logfind."
@@ -54,7 +55,6 @@
   
 (defun main (argv)
   (let ((logic (behaviour argv)) (words (sanitize-commandline argv)))
-	;(format t "~a ~{~a ~}" logic words)
 	(search-privileged-files logic words)))
 
 (if (>= (length sb-ext:*posix-argv*) 1)
