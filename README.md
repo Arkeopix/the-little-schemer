@@ -130,3 +130,5 @@ comments -> ;;;; header text, ;;; paragraph, ;; "block" specific, ; line specifi
 
 ####Logfind
 So i learned quite a lot about lisp doing this exercise: scope, macros (which i finaly did not use)
+In order to use SBCL as a scripting language, one need to do stuff:
+have a look at this [article](http://www.xhbml.com/archives/42)
