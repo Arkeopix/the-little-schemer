@@ -21,7 +21,8 @@ manifest:
 all:		${NAME}
 
 clean:
-			rm -fv logfind 
+			@rm -fv logfind
+			@rm -fv quicklisp-manifest.txt
 
 re:			clean all
 

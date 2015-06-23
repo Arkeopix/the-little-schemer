@@ -46,11 +46,9 @@
 
 (defun sanitize-commandline (argv)
   "cleans the command line arguments"
-  (format t "~{~a~}~%" argv)
   (remove "-o" argv :test #'equal))
   
 (defun main (sb-ext:*posix-argv*)
   (if (>= (length sb-ext:*posix-argv*) 1)
 	  (let ((logic (behaviour sb-ext:*posix-argv*)) (words (sanitize-commandline (cdr sb-ext:*posix-argv*))))
-		(format t "logic = ~a words = ~{~a ~}~%" logic words)
 		(search-privileged-files logic words))))
