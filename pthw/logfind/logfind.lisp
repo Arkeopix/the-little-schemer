@@ -1,7 +1,3 @@
-#! /usr/local/bin/sbcl --noinform
-
-(ql:quickload :cl-ppcre :silent t)
-
 (defun read-file (file)
   (with-open-file (in file)
 	(let ((data (make-string (file-length in))))
@@ -39,8 +35,7 @@
 								  (t (push nil match))))
 						   (if (apply-logic logic-behaviour match)
 							   (push file match-file)))))))
-			(format t "file matched thanks to .logfind: ~{~%~5t- ~a~}" match-file))))
-	));; run all dir if .logfind does not exists
+			(format t "file matched thanks to .logfind: ~{~%~5t- ~a~}" match-file))))))
 
 (defun behaviour (argv)
   "determines the logic behaviour of logfind."
@@ -51,11 +46,11 @@
 
 (defun sanitize-commandline (argv)
   "cleans the command line arguments"
+  (format t "~{~a~}~%" argv)
   (remove "-o" argv :test #'equal))
   
-(defun main (argv)
-  (let ((logic (behaviour argv)) (words (sanitize-commandline argv)))
-	(search-privileged-files logic words)))
-
-(if (>= (length sb-ext:*posix-argv*) 1)
-	(main (cdr (cdr sb-ext:*posix-argv*))))
+(defun main (sb-ext:*posix-argv*)
+  (if (>= (length sb-ext:*posix-argv*) 1)
+	  (let ((logic (behaviour sb-ext:*posix-argv*)) (words (sanitize-commandline (cdr sb-ext:*posix-argv*))))
+		(format t "logic = ~a words = ~{~a ~}~%" logic words)
+		(search-privileged-files logic words))))
