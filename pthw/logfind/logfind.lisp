@@ -11,11 +11,6 @@
 	(t
 	 (every #'identity match))))
 
-(defun file-ok (file line)
-  (cond
-	((cl-ppcre:scan line (concatenate 'string (pathname-name file) (pathname-type file))))
-	(t nil)))
-
 (defun search-privileged-files (logic-behaviour words)
   (let ((match-file '()))
 	(if (probe-file "~/.logfind")
@@ -25,7 +20,7 @@
 			  ((null line))
 			(let ((files-in-dir (directory (make-pathname :name :wild :type :wild :defaults (truename ".")))))
 			  (loop for file in files-in-dir do
-				   (if (file-ok file line)
+				   (if (cl-ppcre:scan line (concatenate 'string (pathname-name file) (pathname-type file)))
 					   (let ((file-content (read-file file)))
 						 (let ((match '()))
 						   (loop for word in words do
