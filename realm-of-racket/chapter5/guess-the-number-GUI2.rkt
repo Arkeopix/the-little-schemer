@@ -28,19 +28,24 @@
 
 (define (smaller w)
   (game-state (game-state-small w)
-              (+ game-state-try 1)
-              (max (game-state-small w) (sub1 (guess w)))))
+              (max (game-state-small w) (sub1 (guess w)))
+              (add1 (game-state-try w))))
 
 (define (bigger w)
   (game-state (min (game-state-big w) (add1 (guess w)))
-              (+ game-state-try 1)
-              (game-state-big w)))
+              (game-state-big w)
+              (add1 (game-state-try w))))
 
 (define (guess w)
   (quotient (+ (game-state-small w) (game-state-big w)) 2))
 
+(define (try->string w)
+  (string-append "try: " (number->string (game-state-try w))))
+
 (define (render w)
-  (overlay (text (number->string (guess w)) SIZE COLOR) MT-SC) (game-state (game-state-try w)))
+  (place-image
+   (text (try->string w) 20 COLOR) (/ WIDTH 2) 50
+         (overlay (text (number->string (guess w)) SIZE COLOR) MT-SC)))
 
 (define (render-last-scene w)
   (overlay (text "End" SIZE COLOR) MT-SC))
